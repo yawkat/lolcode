@@ -122,14 +122,14 @@ public class InstructionReader {
         for (int needlePos = 0, haystackPos = start; haystackPos < haystack.length(); haystackPos++) {
             char c = haystack.charAt(haystackPos);
             if (currentLiteralDelimiter == 0) {
-                if (c == '"' || c == '\'') {
+                if (c == '"') {
                     currentLiteralDelimiter = c;
                 }
             } else {
                 if (!escaped && c == currentLiteralDelimiter) {
                     currentLiteralDelimiter = 0;
                 }
-                escaped = c == '\'';
+                escaped = c == ':';
             }
             if (currentLiteralDelimiter == 0 && needle.charAt(needlePos) == c) {
                 needlePos++;
