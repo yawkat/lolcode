@@ -68,11 +68,17 @@ public class InstructionReader {
 
     public Optional<String> nextInstruction() throws IOException {
         while (true) {
+            String prep = "";
             if (!instructionQueue.isEmpty()) {
-                return Optional.of(instructionQueue.poll());
+                String queuedInstruction = instructionQueue.poll();
+                if (instructionQueue.isEmpty() && queuedInstruction.endsWith("...")) {
+                    prep = queuedInstruction.substring(0, queuedInstruction.length() - 3).trim();
+                } else {
+                    return Optional.of(queuedInstruction);
+                }
             }
 
-            String nextLine = nextLine();
+            String nextLine = prep + nextLine();
             if (nextLine.isEmpty()) {
                 return Optional.empty();
             }
