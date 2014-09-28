@@ -10,7 +10,7 @@ import java.util.Queue;
 /**
  * @author yawkat
  */
-public class InstructionReader {
+public class InstructionReader implements StringInstructionSource {
     private final Reader reader;
 
     private final Queue<String> instructionQueue = new ArrayDeque<>();
@@ -147,5 +147,14 @@ public class InstructionReader {
             }
         }
         return -1;
+    }
+
+    @Override
+    public Optional<String> next() {
+        try {
+            return nextInstruction();
+        } catch (IOException e) {
+            throw new LolcodeException(e);
+        }
     }
 }
